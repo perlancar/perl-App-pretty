@@ -1,0 +1,143 @@
+#!/usr/bin/perl
+
+use 5.010001;
+use strict;
+use warnings;
+
+use Getopt::Long;
+
+# VERSION
+
+my %Opts = (
+    input  => 'json',
+    output => 'Console',
+);
+my $Input;
+my @Output;
+
+sub parse_cmdline {
+    my $res = GetOptions(
+        'input|i=s'  => \$Opts{input},
+        'output|o=s' => \$Opts{output},
+        'version|v'  => sub {
+            say "pretty version ", ($main::VERSION // '?');
+            exit 0;
+        },
+        'help|h'     => sub {
+            print <<USAGE;
+Usage:
+  pretty [OPTIONS] < INPUT
+  pretty --version
+  pretty --help
+Examples:
+  pretty '\$.store.book[*]' < data.json
+Options:
+  --input=s, -i   Input format (json, yaml, perl; default is json).
+  --output=s, -o  Output format (json, yaml, perl, console; default is console).
+Consult manpage/documentation for more details.
+USAGE
+            exit 0;
+        },
+    );
+    exit 99 if !$res;
+}
+
+sub get_input {
+    local $/;
+    if ($Opts{input} eq 'json') {
+        require JSON;
+        $Input = JSON->new->allow_nonref->decode(~~<>);
+    } elsif ($Opts{input} eq 'yaml') {
+        require YAML::Syck;
+        $Input = YAML::Syck::Load(~~<>);
+    } elsif ($Opts{input} eq 'perl') {
+        $Input = eval(~~<>);
+    } else {
+        warn "Unknown input format, ".
+            "refer to documentation for available formats\n";
+        exit 99;
+    }
+}
+
+sub show_output {
+    my $module;
+    if ($Opts{output} eq 'json') {
+        $module = 'JSON';
+    } elsif ($Opts{output} eq 'yaml') {
+        $module = 'YAML';
+    } elsif ($Opts{output} eq 'perl') {
+        $module = 'Perl';
+    } elsif ($Opts{output} !~ /\A[A-Za-z0-9_]+\z/) {
+        die "Invalid output format, ".
+            "refer to documentation for available formats\n";
+        exit 99;
+    } else {
+        $module = $Opts{output};
+    }
+    require Data::Format::Pretty;
+    print Data::Format::Pretty::format_pretty($Input, {module=>$module});
+}
+
+# MAIN
+
+parse_cmdline();
+get_input();
+show_output();
+
+1;
+# ABSTRACT: Format data structure prettily
+# PODNAME: pretty
+
+=head1 SYNOPSIS
+
+Usage:
+
+ % pretty [OPTIONS] < INPUT
+
+
+=head1 DESCRIPTION
+
+This script formats data structure using L<Data::Format::Pretty>. It accepts
+input as JSON, or several other alternative formats (see the C<-i> option). It
+by default outputs the data using the L<Console> formatter module, but you can
+use the other modules.
+
+
+=head1 OPTIONS
+
+=over
+
+=item * --input=STR, -i
+
+Pick input format. Available formats: json (parsed using L<JSON>), yaml (parsed
+using L<YAML::Syck>), perl. Default is json.
+
+=item * --output=STR, -o
+
+Pick output format. Available formats: json, yaml, perl, or any of the available
+C<Data::Format::Pretty::*> (for example, specifying C<Ruby> will use
+the L<Data::Format::Pretty::Ruby> formatter module).
+
+=back
+
+
+=head1 EXIT CODES
+
+0 on success.
+
+99 on command-line options error.
+
+
+=head1 TODO
+
+Pass formatting option to formatter modules.
+
+
+=head1 FAQ
+
+
+=head1 SEE ALSO
+
+L<Data::Format::Pretty>
+
+=cut
