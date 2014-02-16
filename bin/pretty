@@ -30,10 +30,11 @@ Usage:
   pretty --version
   pretty --help
 Examples:
-  pretty '\$.store.book[*]' < data.json
+  pretty -o YAML data.json
 Options:
   --input=s, -i   Input format (json, yaml, perl; default is json).
-  --output=s, -o  Output format (json, yaml, perl, console; default is console).
+  --output=s, -o  Output format (json, yaml, perl, or any formatter module name;
+                  default is Console).
 Consult manpage/documentation for more details.
 USAGE
             exit 0;
