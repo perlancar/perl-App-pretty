@@ -95,13 +95,67 @@ Usage:
 
  % pretty [OPTIONS] < INPUT
 
+Examples:
+
+ % echo '[1..5]' | pretty -i perl
+ .----.
+ |  1 |
+ |  2 |
+ |  3 |
+ |  4 |
+ |  5 |
+ `----'
+
+ % cat celine-dion-album-sales.json
+ [
+   {
+     "lang": "en",
+     "sales": 3000000,
+     "title": "unison",
+     "year": 1990
+   },
+   {
+     "lang": "en",
+     "sales": 5300000,
+     "title": "celine dion",
+     "year": 1992
+   },
+   {
+     "lang": "en",
+     "sales": 16600000,
+     "title": "the color of my love",
+     "year": 1993
+   },
+   ...
+ ]
+
+ % pretty celine-dion-album-sales.json
+ .--------------------------------------------------------------.
+ | lang      sales   tags        title                     year |
+ |                                                              |
+ | en      3000000               unison                    1990 |
+ | en      5300000               celine dion               1992 |
+ | en     16600000               the color of my love      1993 |
+ | en     30300000               falling into you          1996 |
+ | en     32100000               let's talk about love     1997 |
+ | en     12100000   christmas   these are special times   1998 |
+ | en     10500000               a new day has come        2002 |
+ | en      5100000               one heart                 2003 |
+ | en      2600000               miracle                   2004 |
+ | en      3400000               taking chances            2007 |
+ | en      1300000               loved me back to life     2013 |
+ `--------------------------------------------------------------'
+
 
 =head1 DESCRIPTION
 
-This script formats data structure using L<Data::Format::Pretty>. It accepts
-input as JSON, or several other alternative formats (see the C<-i> option). It
-by default outputs the data using the L<Console> formatter module, but you can
-use the other modules.
+This script formats data structure using L<Data::Format::Pretty>. You can use it
+to quickly visualize a data structure on a console. See documentation of
+Data::FOrmat::Pretty for more details.
+
+It accepts input as JSON, or several other alternative formats (see the C<-i>
+option). It by default outputs the data using the L<Console> formatter module,
+but you can use the other modules.
 
 
 =head1 OPTIONS
@@ -132,6 +186,8 @@ the L<Data::Format::Pretty::Ruby> formatter module).
 =head1 TODO
 
 Pass formatting option to formatter modules.
+
+Autodetect input format.
 
 
 =head1 FAQ
