@@ -197,4 +197,6 @@ Autodetect input format.
 
 L<Data::Format::Pretty>
 
+L<pretty-res>
+
 =cut
