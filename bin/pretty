@@ -87,7 +87,7 @@ show_output();
 
 1;
 # ABSTRACT: Format data structure prettily
-# PODNAME: pretty
+# PODNAME:
 
 =head1 SYNOPSIS
 
