@@ -183,13 +183,6 @@ the L<Data::Format::Pretty::Ruby> formatter module).
 99 on command-line options error.
 
 
-=head1 TODO
-
-Pass formatting option to formatter modules.
-
-Autodetect input format.
-
-
 =head1 FAQ
 
 
