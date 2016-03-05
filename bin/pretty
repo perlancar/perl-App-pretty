@@ -154,8 +154,8 @@ to quickly visualize a data structure on a console. See documentation of
 Data::Format::Pretty for more details.
 
 It accepts input as JSON, or several other alternative formats (see the C<-i>
-option). It by default outputs the data using the L<Console> formatter module,
-but you can use the other modules.
+option). It by default outputs the data using the C<Console> formatter module
+(L<Data::Format::Pretty::Console>), but you can use the other modules.
 
 
 =head1 OPTIONS
