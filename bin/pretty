@@ -151,7 +151,7 @@ Examples:
 
 This script formats data structure using L<Data::Format::Pretty>. You can use it
 to quickly visualize a data structure on a console. See documentation of
-Data::FOrmat::Pretty for more details.
+Data::Format::Pretty for more details.
 
 It accepts input as JSON, or several other alternative formats (see the C<-i>
 option). It by default outputs the data using the L<Console> formatter module,
