@@ -1,12 +1,13 @@
 #!perl
 
+# DATE
+# VERSION
+
 use 5.010001;
 use strict;
 use warnings;
 
 use Getopt::Long;
-
-# VERSION
 
 my %Opts = (
     input  => 'json',
@@ -46,8 +47,8 @@ USAGE
 sub get_input {
     local $/;
     if ($Opts{input} eq 'json') {
-        require JSON;
-        $Input = JSON->new->allow_nonref->decode(~~<>);
+        require JSON::MaybeXS;
+        $Input = JSON::MaybeXS->new->allow_nonref->decode(~~<>);
     } elsif ($Opts{input} eq 'yaml') {
         require YAML::Syck;
         $Input = YAML::Syck::Load(~~<>);
