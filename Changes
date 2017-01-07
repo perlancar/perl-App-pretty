@@ -1,5 +1,3 @@
-Revision history for App-pretty
-
 0.05    2016-03-10 (PERLANCAR)
 
 	- Replace JSON with JSON::MaybeXS.
