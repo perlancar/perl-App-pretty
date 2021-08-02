@@ -2,3 +2,4 @@ App-pretty-*
 .build
 *~
 nytprof*
+.DS_Store
